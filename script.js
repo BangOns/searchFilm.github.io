@@ -64,13 +64,17 @@ function getFilmShow(keywords) {
   const xhrr = new XMLHttpRequest();
   xhrr.onload = () => {
     const gass = JSON.parse(xhrr.responseText);
+    clearDisplayshow();
     show(gass);
   };
   const url = getURLShow(keywords);
   xhrr.open("get", url);
   xhrr.send();
 }
-
+const modal_content = document.querySelector(".modal-body");
+function clearDisplayshow() {
+  modal_content.textContent = "";
+}
 function show(kun) {
   let txt = "";
   txt += `<div class="card mb-3" style="max-width: 540px">
@@ -91,6 +95,5 @@ function show(kun) {
     </div>
   </div>
   </div>`;
-  const modal_content = document.querySelector(".modal-body");
   modal_content.innerHTML = txt;
 }
