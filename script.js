@@ -4,18 +4,23 @@ const text = document.querySelector(".form-control");
 function getURL(key) {
   return `https://www.omdbapi.com/?apikey=b1b4d324&s=${key}`;
 }
-function getFilm(keywords) {
+function getFilm(keywords, succses, error) {
   const xhr = new XMLHttpRequest();
   xhr.onload = () => {
-    const data = JSON.parse(xhr.responseText);
-    clearDisplay();
-    ShowDisplay(data);
+    if (xhr.status == 200) {
+      const data = JSON.parse(xhr.responseText);
+      succses(data);
+    } else {
+      error();
+    }
   };
   const url = getURL(keywords);
   xhr.open("get", url);
   xhr.send();
 }
-
+function errorFunction() {
+  console.error("get film Eror");
+}
 function clearDisplay() {
   display.textContent = "";
 }
@@ -49,23 +54,44 @@ function ShowDisplay(data) {
   dpt.forEach((m) => {
     m.addEventListener("click", function () {
       let get = this.getAttribute("data-show");
-      getFilmShow(get);
+      getFilmShow(
+        get,
+        (gass) => {
+          clearDisplayshow();
+          show(gass);
+        },
+        () => {
+          errorFunction();
+        }
+      );
     });
   });
 }
 button.addEventListener("click", function () {
-  getFilm(text.value);
+  getFilm(
+    text.value,
+    (data) => {
+      clearDisplay();
+      ShowDisplay(data);
+    },
+    () => {
+      errorFunction();
+    }
+  );
 });
 
 function getURLShow(key) {
   return `https://www.omdbapi.com/?apikey=b1b4d324&i=${key}`;
 }
-function getFilmShow(keywords) {
+function getFilmShow(keywords, sucses, errror) {
   const xhrr = new XMLHttpRequest();
   xhrr.onload = () => {
-    const gass = JSON.parse(xhrr.responseText);
-    clearDisplayshow();
-    show(gass);
+    if (xhrr.status == 200) {
+      const gass = JSON.parse(xhrr.responseText);
+      sucses(gass);
+    } else {
+      errror();
+    }
   };
   const url = getURLShow(keywords);
   xhrr.open("get", url);
