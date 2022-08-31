@@ -2,7 +2,7 @@ const button = document.querySelector("#button-addon2");
 const display = document.querySelector(".row.mt-4");
 const text = document.querySelector(".form-control");
 function getURL(key) {
-  return `http://www.omdbapi.com/?apikey=b1b4d324&s=${key}`;
+  return `https://www.omdbapi.com/?apikey=b1b4d324&s=${key}`;
 }
 function getFilm(keywords) {
   const xhr = new XMLHttpRequest();
@@ -58,7 +58,7 @@ button.addEventListener("click", function () {
 });
 
 function getURLShow(key) {
-  return `http://www.omdbapi.com/?apikey=b1b4d324&i=${key}`;
+  return `https://www.omdbapi.com/?apikey=b1b4d324&i=${key}`;
 }
 function getFilmShow(keywords) {
   const xhrr = new XMLHttpRequest();
