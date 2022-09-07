@@ -1,87 +1,65 @@
 const button = document.querySelector("#button-addon2");
-const display = document.querySelector(".row.mt-4");
+const display = document.querySelector(".movie-show");
 const text = document.querySelector(".form-control");
-function getURL(key) {
-  return `https://www.omdbapi.com/?apikey=b1b4d324&s=${key}`;
-}
-function getFilm(keywords, succses, error) {
-  const xhr = new XMLHttpRequest();
-  xhr.onload = () => {
-    if (xhr.status == 200) {
-      const data = JSON.parse(xhr.responseText);
-      succses(data);
-    } else {
-      error();
-    }
-  };
-  const url = getURL(keywords);
-  xhr.open("get", url);
-  xhr.send();
-}
+
 function errorFunction() {
-  console.error("get film Eror");
+  return `Eror API`;
 }
 function clearDisplay() {
-  display.textContent = "";
-}
-function ShowDisplay(data) {
-  let urut = data.Search;
-  let hasil = "";
-  for (let col in urut) {
-    hasil += `<div class="col-sm mt-3">
-    <div class="card" style="width: 20rem">
-      <img class="card-img-top" src="${urut[col].Poster}" />
-      <div class="card-body">
-        <h5 class="card-title">${urut[col].Title}</h5>
-        <p class="card-text">
-         ${urut[col].Year}
-        </p>
-        <button
-        type="button"
-        class="btn btn-primary hit"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-     data-show=${urut[col].imdbID}
-      >
-        Show
-      </button>
-      </div>
-    </div>
-  </div>`;
-  }
-  display.innerHTML = hasil;
-  const dpt = document.querySelectorAll(".hit");
-  dpt.forEach((m) => {
-    m.addEventListener("click", function () {
-      let get = this.getAttribute("data-show");
-      getFilmShow(
-        get,
-        (gass) => {
-          clearDisplayshow();
-          show(gass);
-        },
-        () => {
-          errorFunction();
-        }
-      );
-    });
-  });
+  display.textContent = " ";
 }
 button.addEventListener("click", function () {
-  getFilm(
-    text.value,
-    (data) => {
-      clearDisplay();
-      ShowDisplay(data);
-    },
-    () => {
-      errorFunction();
-    }
-  );
+  const url = `http://www.omdbapi.com/?apikey=b1b4d324&s=${text.value}`;
+  fetch(url, {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .then((value) => {
+      let urut = value.Search;
+      let hasil = "";
+      for (let col in urut) {
+        hasil += `<div class="col-sm mt-3">
+      <div class="card" style="width: 20rem">
+        <img class="card-img-top" src="${urut[col].Poster}" />
+        <div class="card-body">
+          <h5 class="card-title">${urut[col].Title}</h5>
+          <p class="card-text">
+           ${urut[col].Year}
+          </p>
+          <button
+          type="button"
+          class="btn btn-primary hit"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+       data-show=${urut[col].imdbID}
+        >
+          Show
+        </button>
+        </div>
+      </div>
+    </div>`;
+      }
+      display.innerHTML = hasil;
+      const dpt = document.querySelectorAll(".hit");
+      dpt.forEach((m) => {
+        m.addEventListener("click", function () {
+          let get = this.getAttribute("data-show");
+          getFilmShow(
+            get,
+            (gass) => {
+              show(gass);
+            },
+            () => {
+              errorFunction();
+            }
+          );
+        });
+      });
+    });
 });
 
 function getURLShow(key) {
-  return `https://www.omdbapi.com/?apikey=b1b4d324&i=${key}`;
+  return `http://www.omdbapi.com/?apikey=b1b4d324&i=${key}`;
 }
 function getFilmShow(keywords, sucses, errror) {
   const xhrr = new XMLHttpRequest();
