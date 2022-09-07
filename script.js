@@ -9,7 +9,7 @@ function clearDisplay() {
   display.textContent = " ";
 }
 button.addEventListener("click", function () {
-  const url = `http://www.omdbapi.com/?apikey=b1b4d324&s=${text.value}`;
+  const url = `https://www.omdbapi.com/?apikey=b1b4d324&s=${text.value}`;
   fetch(url, {
     method: "GET",
   })
@@ -59,7 +59,7 @@ button.addEventListener("click", function () {
 });
 
 function getURLShow(key) {
-  return `http://www.omdbapi.com/?apikey=b1b4d324&i=${key}`;
+  return `https://www.omdbapi.com/?apikey=b1b4d324&i=${key}`;
 }
 function getFilmShow(keywords, sucses, errror) {
   const xhrr = new XMLHttpRequest();
