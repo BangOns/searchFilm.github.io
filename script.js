@@ -10,9 +10,7 @@ function clearDisplay() {
 }
 button.addEventListener("click", function () {
   const url = `https://www.omdbapi.com/?apikey=b1b4d324&s=${text.value}`;
-  fetch(url, {
-    method: "GET",
-  })
+  fetch(url)
     .then((response) => response.json())
     .then((value) => {
       let urut = value.Search;
